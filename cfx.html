@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="INTUITIVE">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>CFX Finder</title>
+    <link rel="icon" href="logo.png">
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+    <link rel="stylesheet" href="CFX-Finder.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 3.17.2, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <script type="application/ld+json">{
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "name": "CFX Bypass"
+    }</script>
+    <meta property="og:title" content="CFX-Finder">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+  </head>
+
+  <body class="u-body u-custom-color-1">
+    <header class="u-clearfix u-header" id="sec-b6fa">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse u-custom-font u-font-arial" style="font-size: 1.125rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                  <symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                    <rect y="1" width="16" height="2"></rect>
+                    <rect y="7" width="16" height="2"></rect>
+                    <rect y="13" width="16" height="2"></rect>
+                  </symbol>
+                </defs>
+              </svg>
+            </a>
+          </div>
+
+          <!-- تعديل هنا لإضافة صفحة جديدة -->
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-custom-font u-font-arial u-nav u-unstyled u-nav-1">
+              <li class="u-nav-item">
+                <a class="u-button-style u-nav-link u-text-active-palette-2-base u-text-hover-palette-2-light-1"
+                  href="index1.html" style="padding: 10px 20px;">Home</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                  <li class="u-nav-item">
+                  </li>
+                  <li class="u-nav-item">
+                    <a class="u-button-style u-nav-link" href="cfx.html" style="padding: 10px 20px;">CFX</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="u-align-center u-clearfix u-section-1" src="" id="sec-01d9">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-text u-title u-text-1">CFX Link</h1>
+        <p class="u-large-text u-text u-text-variant u-text-3">
+          <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-hover-palette-1-light-2 u-text-white u-btn-1" href="https://discord.gg/rir" target="_blank">Made By : Red Ripper</a>
+        </p>
+
+        <div class="u-clearfix u-custom-html u-custom-html-1">
+          <style></style>
+          <input type="text" id="visualzCfx" placeholder="Enter cfx.re/join/...">
+          <br>
+          <button id="visualzBtn">SEARCH</button>
+        </div>
+
+        <!-- باقي سكربت البحث والنتائج كما هو -->
+        <script>
+          const getBtn = document.getElementById('visualzBtn');
+          const visualzApi = () => {
+            var visualzIpReplace = document.getElementById('visualzCfx').value;
+            var visualzIP = visualzIpReplace.replace("cfx.re/join/", "");
+            const xhr = new XMLHttpRequest();
+            const url = `https://servers-frontend.fivem.net/api/servers/single/${visualzIP}`;
+            xhr.open('GET', url);
+            xhr.responseType = 'json';
+            xhr.onload = () => {
+              const data = xhr.response;
+              document.getElementById('serverName').innerHTML = "« Server Name »<br>" + data.Data.hostname;
+            };
+            xhr.send();
+          };
+          getBtn.addEventListener('click', visualzApi);
+        </script>
+
+        <div class="u-align-left u-container-style u-grey-90 u-group u-radius-10 u-shape-round u-group-1">
+          <div class="u-container-layout u-valign-middle u-container-layout-1">
+            <p id="serverName"><br></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
