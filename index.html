@@ -70,15 +70,28 @@
       font-size:28px;
       letter-spacing:1px;
       color:var(--neon);
-      text-shadow:0 0 10px rgba(255,204,0,0.18);
+      text-shadow:0 0 10px rgba(0,255,100,0.25);
+      animation: pulse 2.3s infinite ease-in-out;
     }
 
-    p.message{
+    @keyframes pulse{
+      0%,100%{transform:scale(1);opacity:1}
+      50%{transform:scale(1.05);opacity:0.85}
+    }  }
+
+ p.message{
       margin:0;
       font-size:20px;
       line-height:1.5;
       color:#ddd;
       display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+      animation: slideIn 1.4s ease-out;
+    }
+
+    @keyframes slideIn{
+      0%{transform:translateX(40px);opacity:0}
+      100%{transform:translateX(0);opacity:1}
+    };
     }
 
     .strike{
@@ -95,8 +108,7 @@
       text-shadow:0 0 18px rgba(255,204,0,0.18), 0 0 36px rgba(255,204,0,0.06);
     }
 
-    /* تأثير كتابة تلقائية */
-    .typed{
+    /* تأثير كتابة تلقائية *typed animated-text .typed{
       display:inline-block;
       white-space:pre-wrap;
       overflow:hidden;
@@ -191,7 +203,7 @@
 })();
 
 // نص الرسالة (قابل للتعديل مباشرة هنا)
-    const MESSAGE = 'تم اغلاق التيم Red Ripper بشكل نهائي\nنشكر اخونا segfaultghost';
+    const MESSAGE = 'تم إغلاق التيم بشكل نهائي\nنشكر صاحب التيم segfaultghost و ! Azrael';
 
     // وظيفة كتابة حرف بحرف
     (function typeText(){
@@ -219,8 +231,14 @@
     }
 
     // تحسينات أمنية واجهة فقط: منع السحب الافتراضي
-    document.addEventListener('dragstart', e=>e.preventDefault());
-  </script>
+    document.addEventListener('dragstart', e=>e.preventDefault// إضافة اهتزاز خفيف glitch للنص
+const glitchTarget=document.getElementById('main-text');
+setInterval(()=>{
+  glitchTarget.style.transform='skew('+(Math.random()*2-1)+'deg)';
+  setTimeout(()=>{glitchTarget.style.transform='skew(0deg)';},80);
+},1200);
+
+</script>script>
   <canvas id="matrix" style="position:fixed;inset:0;z-index:-1;opacity:0.18"></canvas>
 </body>
 </html>
