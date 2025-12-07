@@ -10,7 +10,7 @@
     /* إعداد عام */
     :root{
       --bg:#000; /* خلفية سوداء */
-      --neon:#ffcc00; /* لون البرق/نيون */
+      --neon:#00ff55; /* نيون أخضر */ /* لون البرق/نيون */
       --accent:#e63946; /* لون أحمر للتأكيد */
       --muted:#8a8a8a;
       --mono: 'Courier New', Courier, monospace;
@@ -18,7 +18,7 @@
     html,body{height:100%;}
     body{
       margin:0;
-      background: radial-gradient(ellipse at center, rgba(255,255,255,0.02) 0%, rgba(0,0,0,1) 60%), var(--bg);
+      background: radial-gradient(ellipse at center, rgba(0,255,60,0.05) 0%, rgba(0,0,0,1) 60%), var(--bg);
       color:#eee;
       font-family: var(--mono);
       -webkit-font-smoothing:antialiased;
@@ -164,7 +164,33 @@
   </div>
 
   <script>
-    // نص الرسالة (قابل للتعديل مباشرة هنا)
+    // تأثير ماتريكس هكر أخضر
+(function(){
+  const c=document.getElementById('matrix');
+  const ctx=c.getContext('2d');
+  c.height=window.innerHeight;
+  c.width=window.innerWidth;
+  const chars='01';
+  const fontSize=14;
+  const cols=c.width/fontSize;
+  const drops=[];
+  for(let i=0;i<cols;i++) drops[i]=1;
+  function draw(){
+    ctx.fillStyle='rgba(0,0,0,0.07)';
+    ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle='#00ff55';
+    ctx.font=fontSize+'px monospace';
+    for(let i=0;i<drops.length;i++){
+      const text=chars[Math.floor(Math.random()*chars.length)];
+      ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+      if(drops[i]*fontSize > c.height && Math.random()>0.95) drops[i]=0;
+      drops[i]++;
+    }
+  }
+  setInterval(draw,40);
+})();
+
+// نص الرسالة (قابل للتعديل مباشرة هنا)
     const MESSAGE = 'تم اغلاق التيم Red Ripper بشكل نهائي\nنشكر اخونا segfaultghost';
 
     // وظيفة كتابة حرف بحرف
@@ -195,5 +221,6 @@
     // تحسينات أمنية واجهة فقط: منع السحب الافتراضي
     document.addEventListener('dragstart', e=>e.preventDefault());
   </script>
+  <canvas id="matrix" style="position:fixed;inset:0;z-index:-1;opacity:0.18"></canvas>
 </body>
 </html>
