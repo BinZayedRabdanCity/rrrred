@@ -10,7 +10,7 @@
     /* إعداد عام */
     :root{
       --bg:#000; /* خلفية سوداء */
-      --neon:#00ff55; /* نيون أخضر */ /* لون البرق/نيون */
+      --neon:#ffcc00; /* لون البرق/نيون */
       --accent:#e63946; /* لون أحمر للتأكيد */
       --muted:#8a8a8a;
       --mono: 'Courier New', Courier, monospace;
@@ -18,7 +18,7 @@
     html,body{height:100%;}
     body{
       margin:0;
-      background: radial-gradient(ellipse at center, rgba(0,255,60,0.05) 0%, rgba(0,0,0,1) 60%), var(--bg);
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.02) 0%, rgba(0,0,0,1) 60%), var(--bg);
       color:#eee;
       font-family: var(--mono);
       -webkit-font-smoothing:antialiased;
@@ -70,13 +70,7 @@
       font-size:28px;
       letter-spacing:1px;
       color:var(--neon);
-      text-shadow:0 0 10px rgba(0,255,100,0.25);
-      animation: pulse 2.3s infinite ease-in-out;
-    }
-
-    @keyframes pulse{
-      0%,100%{transform:scale(1);opacity:1}
-      50%{transform:scale(1.05);opacity:0.85}
+      text-shadow:0 0 10px rgba(255,204,0,0.18);
     }
 
     p.message{
@@ -85,12 +79,6 @@
       line-height:1.5;
       color:#ddd;
       display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-      animation: slideIn 1.4s ease-out;
-    }
-
-    @keyframes slideIn{
-      0%{transform:translateX(40px);opacity:0}
-      100%{transform:translateX(0);opacity:1}
     }
 
     .strike{
@@ -108,7 +96,7 @@
     }
 
     /* تأثير كتابة تلقائية */
-    .typed animated-text{
+    .typed{
       display:inline-block;
       white-space:pre-wrap;
       overflow:hidden;
@@ -176,35 +164,8 @@
   </div>
 
   <script>
-    // تأثير ماتريكس هكر أخضر
-(function(){
-  const c=document.getElementById('matrix');
-  const ctx=c.getContext('2d');
-  c.height=window.innerHeight;
-  c.width=window.innerWidth;
-  const chars='01';
-  const fontSize=14;
-  const cols=c.width/fontSize;
-  const drops=[];
-  for(let i=0;i<cols;i++) drops[i]=1;
-  function draw(){
-    ctx.fillStyle='rgba(0,0,0,0.07)';
-    ctx.fillRect(0,0,c.width,c.height);
-    ctx.fillStyle='#00ff55';
-    ctx.font=fontSize+'px monospace';
-    for(let i=0;i<drops.length;i++){
-      const text=chars[Math.floor(Math.random()*chars.length)];
-      ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-      if(drops[i]*fontSize > c.height && Math.random()>0.95) drops[i]=0;
-      drops[i]++;
-    }
-  }
-  setInterval(draw,40);
-})();
-
-// نص الرسالة (قابل للتعديل مباشرة هنا)
-    const MESSAGE = 'تم إغلاق التيم بشكل نهائي
-نشكر صاحب التيم segfaultghost و ! Azrael';
+    // نص الرسالة (قابل للتعديل مباشرة هنا)
+    const MESSAGE = 'تم اغلاق التيم Red Ripper بشكل نهائي\nنشكر اخونا segfaultghost';
 
     // وظيفة كتابة حرف بحرف
     (function typeText(){
@@ -233,14 +194,6 @@
 
     // تحسينات أمنية واجهة فقط: منع السحب الافتراضي
     document.addEventListener('dragstart', e=>e.preventDefault());
-  // إضافة اهتزاز خفيف glitch للنص
-const glitchTarget=document.getElementById('main-text');
-setInterval(()=>{
-  glitchTarget.style.transform='skew('+(Math.random()*2-1)+'deg)';
-  setTimeout(()=>{glitchTarget.style.transform='skew(0deg)';},80);
-},1200);
-
-</script>
-  <canvas id="matrix" style="position:fixed;inset:0;z-index:-1;opacity:0.18"></canvas>
+  </script>
 </body>
 </html>
