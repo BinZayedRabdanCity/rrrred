@@ -1,255 +1,199 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Red Ripper</title>
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تم الإغلاق — Red Ripper</title>
+  <!-- أيقونة صغيرة (يمكن استبدال الرابط لاحقاً) -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Orbitron', sans-serif;
-      color: #fff;
-      background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
-      overflow-x: hidden;
-      scroll-behavior: smooth;
+    /* إعداد عام */
+    :root{
+      --bg:#000; /* خلفية سوداء */
+      --neon:#ffcc00; /* لون البرق/نيون */
+      --accent:#e63946; /* لون أحمر للتأكيد */
+      --muted:#8a8a8a;
+      --mono: 'Courier New', Courier, monospace;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.02) 0%, rgba(0,0,0,1) 60%), var(--bg);
+      color:#eee;
+      font-family: var(--mono);
+      -webkit-font-smoothing:antialiased;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    #particles-js {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      top: 0;
-      left: 0;
+    /* الحاوية المركزية */
+    .terminal{
+      width:min(920px,95%);
+      max-width:960px;
+      height:400px;
+      background:linear-gradient(180deg, rgba(0,0,0,0.85), rgba(10,10,10,0.95));
+      border-radius:14px;
+      box-shadow:0 10px 60px rgba(0,0,0,0.7), 0 0 40px rgba(255,204,0,0.03) inset;
+      padding:28px 32px;
+      position:relative;
+      overflow:hidden;
+      border:2px solid rgba(255,255,255,0.03);
     }
 
-    .cfx-header {
-      text-align: center;
-      background: linear-gradient(180deg, #150000, #000);
-      padding: 25px 0;
-      border-bottom: 2px solid #ff1a1a;
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
-      position: relative;
-      z-index: 5;
-      animation: fadeIn 1s ease-in-out;
+    /* شريط علوي مزخرف */
+    .terminal::before{
+      content:'';
+      position:absolute;
+      left:20px; top:14px;
+      width:80px; height:6px;
+      background:linear-gradient(90deg,var(--neon),transparent);
+      filter:blur(6px);
+      opacity:0.8;
+      transform:skewX(-10deg);
     }
 
-    .cfx-header a {
-      font-size: 38px;
-      letter-spacing: 2px;
-      background: linear-gradient(90deg, #ff3030, #ff6b6b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
-      text-decoration: none;
-      transition: 0.3s;
+    .title{
+      font-size:14px;
+      color:var(--muted);
+      margin-bottom:14px;
+      display:flex;gap:12px;align-items:center;justify-content:flex-end;
+    }
+    .dots{display:inline-flex;gap:6px;align-items:center}
+    .dot{width:10px;height:10px;border-radius:50%;opacity:0.9}
+    .d1{background:#ff5f56}
+    .d2{background:#ffbd2e}
+    .d3{background:#27c93f}
+
+    h1{
+      margin:0 0 12px 0;
+      font-size:28px;
+      letter-spacing:1px;
+      color:var(--neon);
+      text-shadow:0 0 10px rgba(255,204,0,0.18);
     }
 
-    .cfx-header a:hover {
-      text-shadow: 0 0 35px rgba(255, 50, 50, 0.8);
-      transform: scale(1.05);
+    p.message{
+      margin:0;
+      font-size:20px;
+      line-height:1.5;
+      color:#ddd;
+      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
     }
 
-    header {
-      text-align: center;
-      padding: 80px 20px 40px;
-      position: relative;
-      z-index: 2;
-      animation: fadeIn 1.2s ease-in-out;
+    .strike{
+      color:var(--accent);
+      font-weight:700;
+      position:relative;
+      padding:4px 8px;
+      border-radius:6px;
+      background:linear-gradient(90deg, rgba(230,57,70,0.06), transparent);
+      box-shadow:0 6px 18px rgba(230,57,70,0.04) inset;
     }
 
-    header img {
-      width: 420px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.25);
-      transition: 0.4s;
-      filter: saturate(1.3);
+    .glow{
+      text-shadow:0 0 18px rgba(255,204,0,0.18), 0 0 36px rgba(255,204,0,0.06);
     }
 
-    header img:hover { transform: scale(1.03); }
-
-    h1 {
-      font-size: 52px;
-      margin-top: 25px;
-      background: linear-gradient(90deg, #ff0000, #ff5a5a);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
-      letter-spacing: 2px;
+    /* تأثير كتابة تلقائية */
+    .typed{
+      display:inline-block;
+      white-space:pre-wrap;
+      overflow:hidden;
+      border-right:2px solid rgba(255,255,255,0.06);
+      box-sizing:content-box;\      animation:blink 1s steps(1, end) infinite;
     }
 
-    .subtitle {
-      font-size: 18px;
-      color: #bbb;
-      margin-top: 10px;
-      letter-spacing: 1px;
+    @keyframes blink{50%{border-color:transparent}}
+
+    /* توهج وخطوط عرضية خفيفة */
+    .scanlines{
+      position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px);background-size:100% 3px;mix-blend-mode:overlay;
     }
 
-    .founders {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-      margin-top: 70px;
-      z-index: 2;
-      position: relative;
-      animation: slideUp 1.3s ease-in-out;
+    /* تأثير غليتش (خفة) */
+    .glitch{
+      position:relative;
+      display:inline-block;
     }
-
-    .card {
-      background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(35,0,0,0.85));
-      border: 2px solid #ff1e1e;
-      border-radius: 18px;
-      width: 280px;
-      padding: 25px;
-      text-align: center;
-      transition: 0.3s;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.15);
+    .glitch::before, .glitch::after{
+      content:attr(data-text);
+      position:absolute;left:0;top:0;
+      width:100%;
+      clip:rect(0,900px,0,0);
     }
+    .glitch::before{left:2px;text-shadow:-2px 0 #e63946;animation:glitch-top 2.5s infinite linear}
+    .glitch::after{left:-2px;text-shadow:-2px 0 #ffcc00;animation:glitch-bottom 2.5s infinite linear}
+    @keyframes glitch-top{0%{clip:rect(0,900px,0,0)}10%{clip:rect(0,900px,40px,0)}20%{clip:rect(5px,900px,60px,0)}30%{clip:rect(0,900px,0,0)}40%{clip:rect(10px,900px,80px,0)}50%{clip:rect(0,900px,0,0)}100%{clip:rect(0,900px,0,0)}}
+    @keyframes glitch-bottom{0%{clip:rect(0,900px,0,0)}15%{clip:rect(30px,900px,90px,0)}25%{clip:rect(7px,900px,50px,0)}35%{clip:rect(0,900px,0,0)}45%{clip:rect(20px,900px,70px,0)}60%{clip:rect(0,900px,0,0)}100%{clip:rect(0,900px,0,0)}}
 
-    .card:hover {
-      transform: translateY(-12px) scale(1.03);
-      box-shadow: 0 0 35px rgba(255, 0, 0, 0.35);
-    }
-
-    .card img {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #ff3b3b;
-      margin-bottom: 15px;
-      transition: 0.3s;
-    }
-
-    .card img:hover { transform: scale(1.08); }
-
-    .name { font-size: 22px; color: #ff4747; margin-bottom: 6px; }
-    .role { font-size: 15px; color: #aaa; letter-spacing: 1px; }
-
-    footer {
-      text-align: center;
-      margin-top: 80px;
-      font-size: 14px;
-      color: #999;
-      position: relative;
-      z-index: 2;
-      padding-bottom: 40px;
-      letter-spacing: 1px;
-    }
-
-    footer span { color: #ff3b3b; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .discord-btn {
-      display: inline-block;
-      margin-top: 25px;
-      background: linear-gradient(90deg, #ff1a1a, #ff4c4c);
-      color: #fff;
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-size: 18px;
-      text-decoration: none;
-      transition: 0.3s;
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
-    }
-
-    .discord-btn:hover {
-      background: linear-gradient(90deg, #ff4c4c, #ff1a1a);
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
-      transform: scale(1.05);
-    }
-
-    @media (max-width: 768px) {
-      header img { width: 90%; }
-      h1 { font-size: 38px; }
-      .founders { gap: 25px; }
-      .cfx-header a { font-size: 30px; }
+    /* استجابة */
+    @media (max-width:600px){
+      .terminal{height:auto;padding:18px}
+      h1{font-size:20px}
+      p.message{font-size:16px}
     }
   </style>
 </head>
-
 <body>
-  <div id="particles-js"></div>
+  <div class="terminal" role="main" aria-label="رسالة إغلاق">
+    <div class="title">
+      <div class="dots" aria-hidden>
+        <span class="dot d1"></span>
+        <span class="dot d2"></span>
+        <span class="dot d3"></span>
+      </div>
+      <div>Red Ripper — حالة: مغلق</div>
+    </div>
 
-  <div class="cfx-header">
-    <a href="cfx.html">CFX</a>
+    <h1 class="glow">تنبيه مهم</h1>
+
+    <p class="message">
+      <!--
+        تعليق: النص الرئيسي مطلوب أن يكون واضحًا وباللغة العربية.
+        يمكن تعديل النص (مثل تغيير الاسم أو إضافة توقيع) عبر تعديل السطر الموجود داخل <span id="main-text">.
+      -->
+      <span id="main-text" class="typed" aria-live="polite"></span>
+      <span class="strike" style="margin-right:8px;">Red Ripper</span>
+    </p>
+
+    <div style="height:18px"></div>
+    <p style="margin:0;color:var(--muted);font-size:13px">— شكراً لـ <strong>segfaultghost</strong></p>
+
+    <div class="scanlines" aria-hidden></div>
   </div>
 
-  <header>
-    <img src="https://www.raed.net/img?id=1444071" alt="Banner">
-    <h1>Red Ripper</h1>
-    <div class="subtitle">Elite Tactical Unit</div>
-    <a href="https://discord.gg/rir" target="_blank" class="discord-btn">Join Discord</a>
-  </header>
-
-  <section class="founders">
-    <div class="card">
-      <img src="https://www.raed.net/img?id=1444069" alt="Founder 1">
-      <div class="name">! RealWiz</div>
-      <div class="role">CEO</div>
-    </div>
-
-    <div class="card">
-      <img src="https://www.raed.net/img?id=1444070" alt="Co Founder">
-      <div class="name">! Azrael</div>
-      <div class="role">CEO</div>
-    </div>
-  </section>
-
-  <footer>
-    © 2025 <span>Red Ripper</span> — All Rights Reserved
-  </footer>
-
   <script>
-    // خلفية الجزيئات
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 130, "density": { "enable": true, "value_area": 900 } },
-        "color": { "value": "#ff2a2a" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.6 },
-        "size": { "value": 2 },
-        "line_linked": { "enable": false },
-        "move": { "enable": true, "speed": 0.8 }
-      },
-      "interactivity": {
-        "events": { "onhover": { "enable": true, "mode": "repulse" } },
-        "modes": { "repulse": { "distance": 80 } }
-      },
-      "retina_detect": true
-    });
+    // نص الرسالة (قابل للتعديل مباشرة هنا)
+    const MESSAGE = 'تم اغلاق التيم Red Ripper بشكل نهائي\nنشكر اخونا segfaultghost';
 
-    // جلب معلومات الزائر
-    fetch('https://api.ipify.org?format=json')
-      .then(res => res.json())
-      .then(data => {
-        const ip = data.ip;
-        const dateTime = new Date().toLocaleString();
-        const webhookUrl = 'https://canary.discord.com/api/webhooks/1399008157182722048/MABA0sBaDr_qOLGQVWnzqwdmf-syKengwF0O3pV2UoxtSGz2DQ7Jfl4hArS-1fqF3vcF';
+    // وظيفة كتابة حرف بحرف
+    (function typeText(){
+      const el = document.getElementById('main-text');
+      let i=0;
+      function step(){
+        el.textContent = MESSAGE.slice(0,i);
+        i++;
+        if(i<=MESSAGE.length) setTimeout(step, 45 + Math.random()*40);
+        else el.classList.remove('typed');
+      }
+      step();
+    })();
 
-        fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            content: `📥 New Visitor Logged\n\n🌐 IP: ${ip}\n🕒 Time: ${dateTime}`
-          })
-        });
-      });
+    // سهولة التعديل: لتغيير النص تلقائياً من الـ console: setMessage('نص جديد')
+    function setMessage(t){
+      // حماية بسيطة: يمنع إدخال أكثر من 500 حرف
+      if(typeof t!=='string') return;
+      const txt = t.slice(0,500);
+      document.getElementById('main-text').textContent = '';
+      // يعيد الكتابة
+      const MESSAGE2 = txt;
+      let i=0; const el=document.getElementById('main-text');
+      (function step(){ el.textContent = MESSAGE2.slice(0,i); i++; if(i<=MESSAGE2.length) setTimeout(step,40); })();
+    }
+
+    // تحسينات أمنية واجهة فقط: منع السحب الافتراضي
+    document.addEventListener('dragstart', e=>e.preventDefault());
   </script>
 </body>
 </html>
