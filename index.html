@@ -73,6 +73,52 @@
 }
 </style>
 
+<!-- عداد يومي فوق اليسار -->
+<div class="daily-counter" style="
+    position:absolute;
+    top:20px;        /* تحكم بارتفاعه */
+    left:20px;       /* تحكم بمسافة من اليسار */
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Beer Money', sans-serif;
+    font-size:20px;
+    font-weight:700;
+    color:#fff;
+    z-index:15;
+">
+  <img src="icons/64905.png" style="width:36px;height:36px;border-radius:6px;">
+  <span id="daily-count">1200</span>
+</div>
+
+<script>
+const countEl = document.getElementById('daily-count');
+const storageKey = 'dailyCount';
+const storageTimeKey = 'dailyCountLastTime';
+
+// استرجاع العدد والتاريخ من LocalStorage
+let count = parseInt(localStorage.getItem(storageKey));
+if (isNaN(count)) count = 1200; // البداية من 1200
+
+let lastTime = parseInt(localStorage.getItem(storageTimeKey)) || 0;
+const now = Date.now();
+
+// زيادة العدد كل 24 ساعة
+if(now - lastTime >= 86400000){
+  count += 2;
+  lastTime = now;
+  localStorage.setItem(storageKey, count);
+  localStorage.setItem(storageTimeKey, lastTime);
+}
+
+// عرض العدد
+countEl.textContent = count;
+
+// تحديث العرض كل ثانية (اختياري)
+setInterval(()=>{
+  countEl.textContent = count;
+}, 1000);
+</script>
 
 <!-- ================== WEBHOOK LOGGER ================== -->
 <script>
@@ -331,7 +377,7 @@ body{
               <img src="badges/snow.webp">
               <img src="badges/king.webp">
               <img src="badges/fe.gif">
-              <img src="badges/binzayedd.webp">
+              <img src="badges/Security-Avatar.png">
               <img src="badges/dev.webp">
               <img src="badges/1.webp">
               <img src="badges/2.webp">
@@ -411,6 +457,7 @@ document.querySelectorAll('.item').forEach(i=>{
 
 </body>
 </html>
+
 
 
 
