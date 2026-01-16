@@ -78,10 +78,17 @@ const targetUrl = "";
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
-  font-family: "beermoney.ttf", Inter, Poppins, system-ui, sans-serif;
+  font-family: "Beer Money", Inter, Poppins, system-ui, sans-serif;
   color:var(--text);
   overflow-x:hidden;
   background:#000;
+}
+@font-face {
+  font-family: "Beer Money";
+  src: url("beermoney.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* ======= VIDEO / GIF BACKGROUND ======= */
@@ -335,6 +342,7 @@ document.querySelectorAll('.item').forEach(i=>{
 
 </body>
 </html>
+
 
 
 
