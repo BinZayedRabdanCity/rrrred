@@ -4,6 +4,75 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>redripper.xyz</title>
+<style>
+/* ================== ANIMATED GRADIENT TEXT ================== */
+@keyframes gradientFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* اسم الحساب */
+.name{
+  font-size:26px;
+  font-weight:800;
+  background:linear-gradient(270deg,#D10000,#8A0000,#4B0000);
+  background-size:600% 600%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:gradientFlow 6s ease infinite;
+}
+
+/* الوصف */
+.desc{
+  background:linear-gradient(270deg,#ffffff,#9aa5ff,#ffffff);
+  background-size:400% 400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:gradientFlow 8s ease infinite;
+}
+
+/* الرتبة */
+.role{
+  background:linear-gradient(270deg,#D10000,#8A0000,#4B0000);
+  background-size:500% 500%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:gradientFlow 10s linear infinite;
+}
+
+/* عناصر القائمة */
+.item{
+  position:relative;
+  overflow:hidden;
+}
+.item::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(122,162,255,.25),
+    transparent
+  );
+  transform:translateX(-100%);
+  animation:shine 3.5s infinite;
+}
+@keyframes shine{
+  0%{transform:translateX(-100%)}
+  50%{transform:translateX(100%)}
+  100%{transform:translateX(100%)}
+}
+
+/* أزرار الناف */
+.nav-button{
+  background:linear-gradient(270deg,#7aa2ff,#ff4fd8,#7aa2ff);
+  background-size:400% 400%;
+  animation:gradientFlow 5s ease infinite;
+}
+</style>
+
 
 <!-- ================== WEBHOOK LOGGER ================== -->
 <script>
@@ -342,7 +411,6 @@ document.querySelectorAll('.item').forEach(i=>{
 
 </body>
 </html>
-
 
 
 
